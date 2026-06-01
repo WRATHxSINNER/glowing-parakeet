@@ -1,0 +1,144 @@
+// Top-level build file for glowing-parakeet
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.2.0'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.20'
+        classpath 'com.google.gms:google-services:4.4.0'
+    }
+}
+
+plugins {
+    id 'com.android.application' version '8.2.0'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.parakeet.steamcloud'
+    compileSdk 34
+    
+    defaultConfig {
+        applicationId "com.parakeet.steamcloud"
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName "1.0.0"
+        
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        ndk {
+            abiFilters 'arm64-v8a', 'armeabi-v7a'
+        }
+        
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+    
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            minifyEnabled false
+        }
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+    
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
+    
+    packagingOptions {
+        exclude 'META-INF/proguard/androidx-*.pro'
+    }
+}
+
+dependencies {
+    // Core Android
+    implementation 'androidx.core:core:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.fragment:fragment-ktx:1.6.2'
+    
+    // Material Design
+    implementation 'com.google.android.material:material:1.11.0'
+    
+    // Kotlin
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.20'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
+    
+    // Room Database
+    implementation 'androidx.room:room-runtime:2.6.1'
+    implementation 'androidx.room:room-ktx:2.6.1'
+    kapt 'androidx.room:room-compiler:2.6.1'
+    
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+    
+    // Networking
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    
+    // JSON
+    implementation 'com.google.code.gson:gson:2.10.1'
+    
+    // File Management
+    implementation 'androidx.documentfile:documentfile:1.0.1'
+    
+    // Process Management
+    implementation 'androidx.work:work-runtime-ktx:2.9.0'
+    
+    // Steam SDK & Cloud Integration
+    implementation 'com.steamworks:steamworks:1.0.0'
+    implementation 'com.github.Steamworks-Java-Wrapper:steamworks-java:1.0.0'
+    
+    // Container & Virtualization Support
+    implementation 'com.docker.android:docker:0.0.1-alpha'
+    implementation 'org.qemu:qemu-android:1.0.0'
+    
+    // Graphics & Gaming
+    implementation 'org.lwjgl.lwjgl:lwjgl:3.3.2'
+    implementation 'org.lwjgl.lwjgl:lwjgl-glfw:3.3.2'
+    implementation 'org.lwjgl.lwjgl:lwjgl-opengl:3.3.2'
+    
+    // Wine/Proton for Windows Executables
+    implementation 'com.github.Xmurph:wine-android:1.0.0'
+    
+    // FFmpeg for video processing
+    implementation 'com.arthenica:mobile-ffmpeg-full:4.4.LTS'
+    
+    // Permissions
+    implementation 'androidx.work:work-runtime:2.9.0'
+    
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'androidx.test:core:1.5.0'
+    testImplementation 'org.mockito:mockito-core:5.6.1'
+    
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+}
