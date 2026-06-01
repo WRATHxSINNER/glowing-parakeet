@@ -42,11 +42,22 @@ android {
         }
     }
     
+    // Signing configuration
+    signingConfigs {
+        release {
+            storeFile file(System.getenv("KEYSTORE_FILE") ?: "/dev/null")
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+            keyAlias System.getenv("KEY_ALIAS") ?: "glowing-parakeet-key"
+            keyPassword System.getenv("KEY_PASSWORD")
+        }
+    }
+    
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         debug {
             debuggable true
