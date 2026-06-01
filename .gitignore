@@ -1,0 +1,46 @@
+# Gradle files
+.gradle/
+build/
+*.apk
+*.aab
+*.jks
+*.keystore
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+
+# Android Studio
+local.properties
+proguard/
+
+# Kotlin
+kotlin-build/
+
+# Room
+schemas/
+
+# Test files
+.externalNativeBuild
+.cxx/
+
+# Encoded keystore (never commit)
+keystore-encoded.txt
+glowing-parakeet.keystore
+
+# Local keystore info
+.android/
+
+# Capture files
+captures/
+
+# Android resources overlays
+mipmap-hdpi/
+mipmap-mdpi/
+mipmap-xhdpi/
+mipmap-xxhdpi/
+mipmap-xxxhdpi/
