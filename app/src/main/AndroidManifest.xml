@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.parakeet.steamcloud">
+
+    <!-- Hardware Features -->
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.gamepad"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.vulkan.version"
+        android:required="false" />
+
+    <!-- Network & Cloud Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+    <!-- Storage Permissions -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+
+    <!-- System Permissions -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_SUPERUSER"
+        tools:ignore="ProtectedPermissions" />
+
+    <!-- Hardware Access -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- Device Permissions -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Performance -->
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <!-- App Installation -->
+    <uses-permission android:name="android.permission.INSTALL_UNKNOWN_APPS" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <!-- Crash & Process Management -->
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+
+    <application
+        android:allowBackup="true"
+        android:debuggable="false"
+        android:enableOnBackInvokedCallback="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.GlowingParakeet"
+        android:usesCleartextTraffic="false"
+        tools:targetApi="33">
+
+        <!-- Main Activity -->
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:resizeableActivity="true"
+            android:screenOrientation="sensor"
+            android:theme="@style/Theme.GlowingParakeet.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Game Engine Activity -->
+        <activity
+            android:name=".engine.GameEngineActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.GlowingParakeet.Fullscreen" />
+
+        <!-- Steam Integration Activity -->
+        <activity
+            android:name=".steam.SteamIntegrationActivity"
+            android:exported="false"
+            android:launchMode="singleTask" />
+
+        <!-- Container Management Activity -->
+        <activity
+            android:name=".container.ContainerManagerActivity"
+            android:exported="false"
+            android:launchMode="standard" />
+
+        <!-- Video Player Activity -->
+        <activity
+            android:name=".video.VideoPlayerActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="sensor" />
+
+        <!-- Windows Executable Emulation Activity -->
+        <activity
+            android:name=".emulator.WineEmulatorActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
+
+        <!-- Services -->
+        <service
+            android:name=".service.SteamCloudService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <service
+            android:name=".service.GameEngineService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="phoneCall" />
+
+        <service
+            android:name=".service.ContainerService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <service
+            android:name=".service.CrashHandlerService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <service
+            android:name=".service.FileCoordinationService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <!-- Broadcast Receivers -->
+        <receiver
+            android:name=".receiver.CrashReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.parakeet.steamcloud.ACTION_CRASH" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".receiver.GameStateReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.parakeet.steamcloud.ACTION_GAME_STATE" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Content Providers -->
+        <provider
+            android:name=".provider.GameDataProvider"
+            android:authorities="com.parakeet.steamcloud.provider.gamedata"
+            android:enabled="true"
+            android:exported="false" />
+
+        <provider
+            android:name=".provider.SaveDataProvider"
+            android:authorities="com.parakeet.steamcloud.provider.savedata"
+            android:enabled="true"
+            android:exported="false" />
+
+        <!-- Configuration Changes -->
+        <meta-data
+            android:name="android.app.supported_screens"
+            android:value="small|normal|large|xlarge" />
+
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value=".ui.SearchableActivity" />
+
+    </application>
+
+</manifest>
